@@ -1,4 +1,5 @@
-﻿using ClickerApp.ViewModels.Base;
+﻿using ClickerApp.Entities.Stats.Instances;
+using ClickerApp.ViewModels.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +12,13 @@ namespace ClickerApp.ViewModels
     {
         public GameViewModel()
         {
-
+            _statsComponent = new();
+            _statsComponent.Health.TakeDamage(25);
+            _statsComponent.Health.Heal();
+            _statsComponent.Level.AddExp(250);
+            _statsComponent.Level.LvlUp();
+            _statsComponent.Health.TakeDamage(23);
         }
-
-
-
-        private float _playerHealth;
-        private float _playerDmg;
+        private StatsComponentBase _statsComponent;
     }
 }
