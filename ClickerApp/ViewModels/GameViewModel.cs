@@ -1,4 +1,5 @@
-﻿using ClickerApp.Entities.Stats.Instances;
+﻿using ClickerApp.Entities.Base;
+using ClickerApp.Entities.Stats.Instances;
 using ClickerApp.ViewModels.Base;
 using System;
 using System.Collections.Generic;
@@ -12,14 +13,39 @@ namespace ClickerApp.ViewModels
     {
         public GameViewModel()
         {
-            _statsComponent1 = new();
-            _statsComponent2 = new();
+            _player = new PlayerBase("Loloshka", new StatsComponentBase(), 4);
+            RespawnEnemy();
 
-            _statsComponent1.Damage.DealDamage(_statsComponent2);
-            _statsComponent1.Damage.DealDamage(_statsComponent2);
-            _statsComponent1.Damage.DealDamage(_statsComponent2);
+            Attack = new RelayCommand(o =>
+            {
+                _player.Component.Damage.DealDamage(_enemy!.Component.Health);
+                OnPropertyChanged(nameof(Enemy));
+                if (IsEnemyDead)
+                    RespawnEnemy();
+            });
+            Heal = new RelayCommand(o => 
+            {
+                _player.Component.Health.Heal();
+            });
         }
-        private StatsComponentBase _statsComponent1;
-        private StatsComponentBase _statsComponent2;
+        private PlayerBase _player;
+        private EnemyBase? _enemy = null!;
+
+        public PlayerBase Player => _player;
+        public EnemyBase? Enemy => _enemy;
+
+        public bool IsEnemyExist => _enemy != null;
+        public bool IsEnemyDead => _enemy!.Component.Health.IsDead;
+
+        public RelayCommand Attack { get; }
+        public RelayCommand Heal { get; }
+
+        public void RespawnEnemy()
+        {
+            if (IsEnemyExist) return;
+
+            _enemy = EnemyBase.CreateEnemy();
+            OnPropertyChanged(nameof(Enemy));
+        }
     }
 }

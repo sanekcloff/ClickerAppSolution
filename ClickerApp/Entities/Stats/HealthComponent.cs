@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClickerApp.Utils.Abstract;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ClickerApp.Entities.Stats
 {
-    public class HealthComponent
+    public class HealthComponent : ComponentBase
     {
         private class HealthData
         {
@@ -43,12 +44,16 @@ namespace ClickerApp.Entities.Stats
             }
         }
 
-        public HealthComponent(float baseHealth = 100, float perLvlHealth = 10, float minHealth = 0)
+        public HealthComponent(ComponentBase owner = null!, float baseHealth = 100, float perLvlHealth = 10, float minHealth = 0) : base(owner)
         {
             _healthData = new HealthData(baseHealth, perLvlHealth, minHealth);
             Debug.WriteLine($"{this} created!");
         }
         private HealthData _healthData;
+
+        public float MinHealth => _healthData.MinHealth;
+        public float MaxHealth => _healthData.MaxHealth;
+        public float CurrentHealth { get => _healthData.CurrentHealth; set { Console.WriteLine(); } }
 
         public bool IsDead => _healthData.CurrentHealth == _healthData.MinHealth;
         public bool IsAlive => _healthData.CurrentHealth > _healthData.MinHealth;
@@ -62,7 +67,7 @@ namespace ClickerApp.Entities.Stats
             {
                 _healthData.CurrentHealth = diff;
             }
-            else 
+            else
             {
                 _healthData.CurrentHealth = _healthData.MinHealth;
             }
@@ -75,7 +80,7 @@ namespace ClickerApp.Entities.Stats
 
             if (IsFullHealth) return;
 
-            _healthData.CurrentHealth = Math.Clamp(_healthData.CurrentHealth + _healthData.MaxHealth * 0.2f, _healthData.MinHealth,_healthData.MaxHealth);
+            _healthData.CurrentHealth = Math.Clamp(_healthData.CurrentHealth + _healthData.MaxHealth * 0.2f, _healthData.MinHealth, _healthData.MaxHealth);
             Debug.WriteLine($"{this} healed!");
         }
         public void LvlUp(int level)
@@ -84,5 +89,5 @@ namespace ClickerApp.Entities.Stats
             _healthData.IncreeseLvlMupltiplier(level);
         }
     }
-    
+
 }

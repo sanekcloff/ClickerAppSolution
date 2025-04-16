@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClickerApp.Utils.Abstract;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -7,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace ClickerApp.Entities.Stats
 {
-    public class LevelComponent
+    public class LevelComponent : ComponentBase
     {
-
         private class LevelData
         {
             public LevelData(int level, int maxExp)
@@ -59,13 +59,15 @@ namespace ClickerApp.Entities.Stats
         public delegate void LevelHandler(int level);
         public event LevelHandler LevelUp;
         #endregion
-        public LevelComponent(int level = 1, int maxExp = 100)
+        public LevelComponent(ComponentBase owner, int level = 1, int maxExp = 100) : base (owner)
         {
             _levelData = new LevelData(level, maxExp);
             Debug.WriteLine("Level component created!");
         }
 
         private LevelData _levelData;
+
+        public int CurrentLevel => _levelData.Level;
 
         public void LvlUp()
         {

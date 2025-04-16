@@ -11,24 +11,24 @@
 
         <StackPanel Orientation="Vertical">
 
-            <TextBlock Text="LEVEL 0"/>
+            <TextBlock Text="{Binding Player.Component.Level.CurrentLevel, StringFormat= 'Level: {0}'}" />
 
         </StackPanel>
 
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             
             <TextBlock Text="LEVEL 0" HorizontalAlignment="Center"/>
-            
+
+            <ProgressBar Height="10" Margin="10" Value="{Binding Enemy.Component.Health.CurrentHealth}" Minimum="{Binding Enemy.Component.Health.MinHealth}" Maximum="{Binding Enemy.Component.Health.MaxHealth}"/>
+
             <Image Source="{Binding Enemy.Image}" Width="200" Height="200"/>
 
-            <Button Content="Attack" Margin="20" Height="40"/>
+            <Button Content="Attack" Margin="20" Height="40" Command="{Binding Attack}"/>
 
         </StackPanel>
 
         <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="20" Orientation="Horizontal">
 
-            <Button Content="ClickDmg"/>
-            <Button Content="TickDmg"/>
 
         </StackPanel>
 

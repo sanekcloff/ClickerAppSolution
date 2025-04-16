@@ -1,4 +1,6 @@
 ﻿using ClickerApp.Entities.Stats.Instances;
+using ClickerApp.Utils.Abstract;
+using ClickerApp.Utils.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ClickerApp.Entities.Stats
 {
-    public class DamageComponent
+    public class DamageComponent : ComponentBase
     {
         private class DamageData
         {
@@ -32,24 +34,27 @@ namespace ClickerApp.Entities.Stats
             }
         }
 
-        public DamageComponent(float damageBase = 90, float damagePerLvl = 2)
+        public DamageComponent(ComponentBase owner = null!, float damageBase = 10, float damagePerLvl = 2) : base(owner)
         {
             _damageData = new DamageData(damageBase, damagePerLvl);
         }
 
         private DamageData _damageData;
 
-        public void DealDamage(StatsComponentBase statComponent)
+        public void DealDamage(HealthComponent targetHealthComponent)
         {
-            var targetHealthComponent = statComponent.Health;
 
-            var isTakeDamage =targetHealthComponent.TakeDamage(_damageData.Damage);
+            var isTakeDamage = targetHealthComponent.TakeDamage(_damageData.Damage);
             if (isTakeDamage)
             {
                 Debug.WriteLine($"{this.GetType().Name} - dealed {_damageData.Damage} damage!");
                 if (!targetHealthComponent.IsDead) return;
 
-                statComponent.Level.AddExp(50);
+                var statComponent = Owner as StatsComponentBase;
+                if (statComponent != null)
+                {
+                    statComponent.Level.AddExp(50);
+                }
             }
             else
             {
