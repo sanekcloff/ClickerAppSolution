@@ -19,5 +19,6 @@ namespace ClickerApp.Entities.Base
 
         private uint _healthPotions;
         public uint HealthPotions { get => _healthPotions; set => _healthPotions = value; }
+
     }
 }

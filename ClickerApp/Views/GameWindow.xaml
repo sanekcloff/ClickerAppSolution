@@ -5,25 +5,52 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ClickerApp.Views"
         mc:Ignorable="d"
-        Title="GameWindow" Height="450" Width="300" ResizeMode="NoResize">
+        Title="{Binding Player.Nickname, StringFormat='Player: {0}'}" Height="450" Width="300" ResizeMode="NoResize">
     
     <Grid>
 
-        <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
 
-            <TextBlock Text="{Binding Player.Component.Level.CurrentLevel, StringFormat= 'Level: {0}'}" />
+            <TextBlock Text="{Binding Player.Component.Level.CurrentLevel, StringFormat= 'Level: {0}'}"/>
+
+            <StackPanel Orientation="Horizontal">
+
+                <TextBlock Text="{Binding Player.Component.Level.CurrentExp, StringFormat='EXP {0} / '}"/>
+                <TextBlock Text="{Binding Player.Component.Level.MaxExp}"/>
+
+            </StackPanel>
+
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top">
+
+            <StackPanel Orientation="Vertical">
+
+                <TextBlock Text="{Binding Player.Component.Health.CurrentHealth, StringFormat='HP: {0}'}"/>
+                <TextBlock Text="{Binding Player.HealthPotions, StringFormat='Potions: {0}'}"/>
+
+            </StackPanel>
 
         </StackPanel>
 
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            
-            <TextBlock Text="LEVEL 0" HorizontalAlignment="Center"/>
 
-            <ProgressBar Height="10" Margin="10" Value="{Binding Enemy.Component.Health.CurrentHealth}" Minimum="{Binding Enemy.Component.Health.MinHealth}" Maximum="{Binding Enemy.Component.Health.MaxHealth}"/>
+            <TextBlock Text="{Binding Enemy.Component.Level.CurrentLevel, StringFormat= 'LEVEL {0}'}" HorizontalAlignment="Center"/>
+
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+
+                <TextBlock Text="{Binding Enemy.Component.Health.MinHealth}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                <ProgressBar Height="10" Margin="10" Value="{Binding Enemy.Component.Health.CurrentHealth}" Minimum="{Binding Enemy.Component.Health.MinHealth}" Maximum="{Binding Enemy.Component.Health.MaxHealth}" Width="150"/>
+
+                <TextBlock Text="{Binding Enemy.Component.Health.MaxHealth}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                
+            </StackPanel>
 
             <Image Source="{Binding Enemy.Image}" Width="200" Height="200"/>
 
             <Button Content="Attack" Margin="20" Height="40" Command="{Binding Attack}"/>
+            <Button Content="Heal" Margin="5" Width="100" Height="20" Command="{Binding Heal}"/>
 
         </StackPanel>
 

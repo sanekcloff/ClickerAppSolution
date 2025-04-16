@@ -35,7 +35,7 @@ namespace ClickerApp.Entities.Stats
             {
                 _lvlMultiplier = level;
                 Debug.WriteLine($" {this.GetType().Name} - Level multiplier changed!");
-                ResetHealth();
+                //ResetHealth();
             }
             private void ResetHealth()
             {

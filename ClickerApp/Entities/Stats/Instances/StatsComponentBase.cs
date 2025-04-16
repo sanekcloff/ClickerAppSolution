@@ -1,4 +1,5 @@
-﻿using ClickerApp.Utils.Abstract;
+﻿using ClickerApp.Entities.Base;
+using ClickerApp.Utils.Abstract;
 using ClickerApp.Utils.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace ClickerApp.Entities.Stats.Instances
     {
         public StatsComponentBase() : base(null!)
         {
-            _level = new LevelComponent(this);
+            _level = new LevelComponent(this,1,100);
             _health = new HealthComponent(this);
             _damage = new DamageComponent(this);
 
@@ -24,9 +25,13 @@ namespace ClickerApp.Entities.Stats.Instances
             _level = new LevelComponent(this,levelComponent.level,levelComponent.maxExp);
             _health = new HealthComponent(this, healthComponent.@base,healthComponent.perLvl);
             _damage = new DamageComponent(this,damageComponent.@base, damageComponent.perLvl);
-
             _level.LevelUp += _health.LvlUp;
             _level.LevelUp += _damage.LvlUp;
+            for (int i = 1; i < levelComponent.level; i++)
+            {
+                _level.AddExp(_level.MaxExp);
+                _level.LvlUp();
+            }
         }
 
         private LevelComponent _level;

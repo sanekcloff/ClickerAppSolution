@@ -54,6 +54,10 @@ namespace ClickerApp.Entities.Stats
                 if (statComponent != null)
                 {
                     statComponent.Level.AddExp(50);
+                    if (statComponent.Level.CanLvlUp)
+                    {
+                        statComponent.Level.LvlUp();
+                    }
                 }
             }
             else

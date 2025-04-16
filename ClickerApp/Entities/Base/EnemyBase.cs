@@ -19,15 +19,13 @@ namespace ClickerApp.Entities.Base
             Image = IMAGES[new Random().Next(IMAGES.Length)];
         }
         public string Image { get; set; }
-        public static EnemyBase CreateEnemy()
+        public static EnemyBase CreateEnemy(int lvl)
         {
-            var level = (lvl:1,maxExp:100);
-            var health = (@base:100,perLvl:20);
-            var damage = (@base:20,perLvl:5);
+            var level = (lvl: lvl, maxExp:100);
+            var health = (@base:100 ,perLvl:20);
+            var damage = (@base:5,perLvl:5);
 
-            var enemy = new EnemyBase(new StatsComponentBase(level, health,damage));
-
-            return enemy;
+            return new EnemyBase(new StatsComponentBase(level, health,damage));
         }
 
     }

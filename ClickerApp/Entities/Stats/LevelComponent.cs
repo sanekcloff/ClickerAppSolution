@@ -12,10 +12,10 @@ namespace ClickerApp.Entities.Stats
     {
         private class LevelData
         {
-            public LevelData(int level, int maxExp)
+            public LevelData(int maxExp)
             {
                 _currentExp = MIN_EXP;
-                _level = level;
+                _level = 1;
                 _maxExp = maxExp;
                 Debug.WriteLine("Level data created!");
             }
@@ -26,6 +26,8 @@ namespace ClickerApp.Entities.Stats
 
             public const int MIN_EXP = 0;
             public int Level => _level;
+            public int MaxExp => _maxExp;
+            public int CurrentExp => _currentExp;
             public bool CanLvlUp => _currentExp >= _maxExp;
 
             public void AddExp(int value)
@@ -61,13 +63,17 @@ namespace ClickerApp.Entities.Stats
         #endregion
         public LevelComponent(ComponentBase owner, int level = 1, int maxExp = 100) : base (owner)
         {
-            _levelData = new LevelData(level, maxExp);
+            _levelData = new LevelData( maxExp);
             Debug.WriteLine("Level component created!");
+            
         }
 
         private LevelData _levelData;
 
+        public int MaxExp => _levelData.MaxExp;
+        public int CurrentExp => _levelData.CurrentExp;
         public int CurrentLevel => _levelData.Level;
+        public bool CanLvlUp => _levelData.CanLvlUp;
 
         public void LvlUp()
         {
