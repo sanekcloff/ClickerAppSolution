@@ -10,7 +10,7 @@ namespace ClickerApp.Entities.Stats
     public class LevelComponent
     {
 
-        private struct LevelData
+        private class LevelData
         {
             public LevelData(int level, int maxExp)
             {
@@ -19,6 +19,7 @@ namespace ClickerApp.Entities.Stats
                 _maxExp = maxExp;
                 Debug.WriteLine("Level data created!");
             }
+
             private int _level;
             private int _maxExp;
             private int _currentExp;
@@ -47,7 +48,7 @@ namespace ClickerApp.Entities.Stats
             {
                 _level++;
                 // 0 = 100 - 100
-                // 20 = 120 - 100
+                // 150 = 250 - 100
                 Debug.WriteLine($" {this.GetType().Name} - Level upped!");
                 return _currentExp - _maxExp;
             }

@@ -12,13 +12,14 @@ namespace ClickerApp.ViewModels
     {
         public GameViewModel()
         {
-            _statsComponent = new();
-            _statsComponent.Health.TakeDamage(25);
-            _statsComponent.Health.Heal();
-            _statsComponent.Level.AddExp(250);
-            _statsComponent.Level.LvlUp();
-            _statsComponent.Health.TakeDamage(23);
+            _statsComponent1 = new();
+            _statsComponent2 = new();
+
+            _statsComponent1.Damage.DealDamage(_statsComponent2);
+            _statsComponent1.Damage.DealDamage(_statsComponent2);
+            _statsComponent1.Damage.DealDamage(_statsComponent2);
         }
-        private StatsComponentBase _statsComponent;
+        private StatsComponentBase _statsComponent1;
+        private StatsComponentBase _statsComponent2;
     }
 }

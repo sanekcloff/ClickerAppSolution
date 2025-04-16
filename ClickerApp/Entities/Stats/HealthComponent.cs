@@ -9,7 +9,7 @@ namespace ClickerApp.Entities.Stats
 {
     public class HealthComponent
     {
-        private struct HealthData
+        private class HealthData
         {
             public HealthData(float baseHealth, float perLvlHealth, float minHealth)
             {
@@ -53,9 +53,9 @@ namespace ClickerApp.Entities.Stats
         public bool IsDead => _healthData.CurrentHealth == _healthData.MinHealth;
         public bool IsAlive => _healthData.CurrentHealth > _healthData.MinHealth;
         public bool IsFullHealth => _healthData.CurrentHealth == _healthData.MaxHealth;
-        public void TakeDamage(float dmg)
+        public bool TakeDamage(float dmg)
         {
-            if (IsDead) return;
+            if (IsDead) return false;
 
             var diff = _healthData.CurrentHealth - dmg;
             if (diff >= 0)
@@ -67,6 +67,7 @@ namespace ClickerApp.Entities.Stats
                 _healthData.CurrentHealth = _healthData.MinHealth;
             }
             Debug.WriteLine($"{this} - taked {dmg} damage!");
+            return true;
         }
         public void Heal()
         {
