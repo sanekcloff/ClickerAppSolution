@@ -14,7 +14,8 @@ namespace ClickerApp.ViewModels
         public GameViewModel()
         {
             _player = new PlayerBase("Loloshka", new StatsComponentBase(), 4);
-            RespawnEnemy();
+            if (!IsEnemyExist)
+                RespawnEnemy();
 
             Attack = new RelayCommand(o =>
             {
@@ -23,7 +24,7 @@ namespace ClickerApp.ViewModels
                 if (IsEnemyDead)
                     RespawnEnemy();
             });
-            Heal = new RelayCommand(o => 
+            Heal = new RelayCommand(o =>
             {
                 _player.Component.Health.Heal();
             });
@@ -42,10 +43,9 @@ namespace ClickerApp.ViewModels
 
         public void RespawnEnemy()
         {
-            if (IsEnemyExist) return;
-
             _enemy = EnemyBase.CreateEnemy();
             OnPropertyChanged(nameof(Enemy));
+            OnPropertyChanged(nameof(Player));
         }
     }
 }
